@@ -68,9 +68,10 @@ def user_market():
     except Exception as e:
         return jsonify({"error": str(e)})
 
-@app.route('/')
-def index():
-    return 'API UP', 200
+
+@app.route('/health')
+def health():
+    return 'OK', 200
 
 if __name__ == '__main__':
     import os
