@@ -68,6 +68,10 @@ def user_market():
     except Exception as e:
         return jsonify({"error": str(e)})
 
+@app.route('/')
+def index():
+    return 'API UP', 200
+
 if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 8000))  # 8000 par défaut en local
