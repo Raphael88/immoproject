@@ -69,4 +69,6 @@ def user_market():
         return jsonify({"error": str(e)})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    import os
+    port = int(os.environ.get('PORT', 8000))  # 8000 par défaut en local
+    app.run(host='0.0.0.0', port=port)
