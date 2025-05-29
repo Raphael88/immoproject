@@ -54,17 +54,10 @@ def dvf_market():
         # Catch into a dataframe
 
         df = pd.DataFrame(results)
-        market_list = df['market_name'].to_list()
-        df_1 = pd.DataFrame({"label": [], "value":[]})
-        value = 1
-        # Return a list to retool format
-        for market in market_list:
-            df_1_temp = pd.DataFrame({"label": [market], "value":[value]})
-            df_1 = pd.concat([df_1, df_1_temp], ignore_index = True)                         
-            value = value + 1
 
 
-        return jsonify(df_1.to_dict(orient="records"))
+
+        return jsonify(df.to_dict(orient='records'))
 
     except Exception as e:
         return jsonify({"error": str(e)})
