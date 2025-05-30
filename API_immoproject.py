@@ -143,7 +143,7 @@ def prediction():
     price_10 = prediction * (1 + Taux_croissance) ** 10 
     price_15 = prediction * (1 + Taux_croissance) ** 15 
     price_20 = prediction * (1 + Taux_croissance) ** 20 
-    return jsonify({"prediction": prediction[0], "prediction_2020": prediction_2020[0],"price_5" : price_10[0], "price_10" : price_10[0], "price_20" : price_20[0], "Taux_croissance" : Taux_croissance[0]}), 200
+    return jsonify({"prediction": prediction[0], "prediction_2020": prediction_2020[0],"price_5" : price_5[0], "price_10" : price_10[0], "price_15" : price_15[0],"price_20" : price_20[0], "Taux_croissance" : Taux_croissance[0]}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
