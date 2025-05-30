@@ -2,3 +2,5 @@ Flask
 gunicorn
 pyodbc
 pandas
+sklearn
+joblib

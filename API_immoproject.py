@@ -117,7 +117,25 @@ def user_market():
         return jsonify({"error": str(e)})
 
 
+@app.route('/predict', methods=['GET'])
+def prediction():
+    f1 = int(float(request.args.get('type_bien')))
+    f2 = float(request.args.get('nomb_piece'))
+    f3 = float(request.args.get('terr_m2'))
+    f4 = float(request.args.get('hab_m2'))
+    f5 = float(request.args.get('Year'))
+    f6 = float(request.args.get('market_id'))
+    f7 = int(float(request.args.get('tiers')))
 
+    model = joblib.load("models\\"+str(f6)+"_model_tier_"+str(f7)+".pkl") 
+    data = pd.DataFrame({'type_bien' : [str(f1)],  'nomb_piece' : [f2], 'terr_m2' : [f3], 'hab_m2' : [f4], 'Year' : [f5], 'tiers' : [f6]})
+    X_real = data[['type_bien',  'nomb_piece', 'terr_m2', 'hab_m2', 'Year']]
+    prediction = model.predict(X_real)
+    
+    return jsonify({"prediction": prediction[0]}), 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 @app.route('/health')
 def health():
