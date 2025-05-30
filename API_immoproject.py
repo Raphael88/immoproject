@@ -135,10 +135,10 @@ def prediction():
     prediction = model.predict(X_real)
 
     model = joblib.load(f"models/{f6}_model_tier_{f7}.pkl")
-    data = pd.DataFrame({'type_bien' : [str(f1)],  'nomb_piece' : [f2], 'terr_m2' : [f3], 'hab_m2' : [f4], 'Year' : [f5], 'tiers' : [f6]})
+    data = pd.DataFrame({'type_bien' : [str(f1)],  'nomb_piece' : [f2], 'terr_m2' : [f3], 'hab_m2' : [f4], 'Year' : [2020], 'tiers' : [f6]})
     X_real = data[['type_bien',  'nomb_piece', 'terr_m2', 'hab_m2', 'Year']]
     prediction_2020 = model.predict(X_real)
-    Taux_croissance = (prediction/prediction_2020)*(1/(f5-2020))
+    Taux_croissance = (prediction/prediction_2020)^(1/(f5-2020))
     price_5 = 1000 * (1 + Taux_croissance) ** 5 
     price_10 = 1000 * (1 + Taux_croissance) ** 10 
     price_20 = 1000 * (1 + Taux_croissance) ** 20 
