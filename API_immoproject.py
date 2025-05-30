@@ -133,8 +133,16 @@ def prediction():
     data = pd.DataFrame({'type_bien' : [str(f1)],  'nomb_piece' : [f2], 'terr_m2' : [f3], 'hab_m2' : [f4], 'Year' : [f5], 'tiers' : [f6]})
     X_real = data[['type_bien',  'nomb_piece', 'terr_m2', 'hab_m2', 'Year']]
     prediction = model.predict(X_real)
-    
-    return jsonify({"prediction": prediction[0]}), 200
+
+    model = joblib.load(f"models/{f6}_model_tier_{f7}.pkl")
+    data = pd.DataFrame({'type_bien' : [str(f1)],  'nomb_piece' : [f2], 'terr_m2' : [f3], 'hab_m2' : [f4], 'Year' : [f5], 'tiers' : [f6]})
+    X_real = data[['type_bien',  'nomb_piece', 'terr_m2', 'hab_m2', 'Year']]
+    prediction_2020 = model.predict(X_real)
+    Taux_croissance = (prediction/prediction_2020)*(1/(f5-2020))
+    price_5 = 1000 * (1 + Taux_croissance) ** 5 
+    price_10 = 1000 * (1 + Taux_croissance) ** 10 
+    price_20 = 1000 * (1 + Taux_croissance) ** 20 
+    return jsonify({"prediction": prediction[0], "price_5" : price_10[0], "price_10" : price_10[0], "price_20" : price_20[0], "Taux_croissance" : Taux_croissance[0]}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
