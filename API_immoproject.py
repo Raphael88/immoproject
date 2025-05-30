@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 import pyodbc
 import pandas as pd
 import os
+from sklearn import  linear_model
+import joblib
 
 app = Flask(__name__)
 API_KEY = os.environ.get("API_KEY")
