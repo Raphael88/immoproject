@@ -129,7 +129,7 @@ def prediction():
     f6 = int(float(request.args.get('market_id')))
     f7 = int(float(request.args.get('tiers')))
 
-    model = joblib.load("immoproject\\models\\"+str(f6)+"_model_tier_"+str(f7)+".pkl") 
+    model = joblib.load(f"immoproject/models/{f6}_model_tier_{f7}.pkl")
     data = pd.DataFrame({'type_bien' : [str(f1)],  'nomb_piece' : [f2], 'terr_m2' : [f3], 'hab_m2' : [f4], 'Year' : [f5], 'tiers' : [f6]})
     X_real = data[['type_bien',  'nomb_piece', 'terr_m2', 'hab_m2', 'Year']]
     prediction = model.predict(X_real)
