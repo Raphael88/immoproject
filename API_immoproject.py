@@ -126,7 +126,7 @@ def prediction():
     f3 = float(request.args.get('terr_m2'))
     f4 = float(request.args.get('hab_m2'))
     f5 = float(request.args.get('Year'))
-    f6 = float(request.args.get('market_id'))
+    f6 = int(float(request.args.get('market_id')))
     f7 = int(float(request.args.get('tiers')))
 
     model = joblib.load("models\\"+str(f6)+"_model_tier_"+str(f7)+".pkl") 
