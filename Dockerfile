@@ -28,8 +28,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Forçage du port
 EXPOSE 8000
 
-#Load models 
-COPY models/ models/
-
 # Étape 6 : Lancer le serveur avec gunicorn
 CMD ["gunicorn", "-b", "0.0.0.0:8000", "API_immoproject:app"]
