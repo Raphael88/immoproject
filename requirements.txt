@@ -2,5 +2,5 @@ Flask
 gunicorn
 pyodbc
 pandas
-sklearn
+scikit-learn
 joblib
