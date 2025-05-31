@@ -144,7 +144,7 @@ def prediction():
 
     if Taux_croissance < 0:
         Taux_croissance = 0
-    else
+    else:
         pass
 
     price_5 = prediction * (1 + Taux_croissance) ** 5 
