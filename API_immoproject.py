@@ -128,6 +128,8 @@ def prediction():
     f5 = float(request.args.get('Year'))
     f6 = int(float(request.args.get('market_id')))
     f7 = int(float(request.args.get('tiers')))
+    f8 = request.args.get('situation')
+    f9 = float(request.args.get('price_user'))
 
     model = joblib.load(f"models/{f6}_model_tier_{f7}.pkl")
     data = pd.DataFrame({'type_bien' : [str(f1)],  'nomb_piece' : [f2], 'terr_m2' : [f3], 'hab_m2' : [f4], 'Year' : [f5], 'tiers' : [f6]})
@@ -139,11 +141,80 @@ def prediction():
     X_real = data[['type_bien',  'nomb_piece', 'terr_m2', 'hab_m2', 'Year']]
     prediction_2020 = model.predict(X_real)
     Taux_croissance = ((prediction/prediction_2020)**(1/(f5-2020))-1)
+
+    if Taux_croissance < 0:
+        Taux_croissance = 0
+    else
+        pass
+
     price_5 = prediction * (1 + Taux_croissance) ** 5 
     price_10 = prediction * (1 + Taux_croissance) ** 10 
     price_15 = prediction * (1 + Taux_croissance) ** 15 
     price_20 = prediction * (1 + Taux_croissance) ** 20 
-    return jsonify({"prediction": prediction[0], "prediction_2020": prediction_2020[0],"price_5" : price_5[0], "price_10" : price_10[0], "price_15" : price_15[0],"price_20" : price_20[0], "Taux_croissance" : Taux_croissance[0]}), 200
+
+    if f9 > prediction and f8 = "achat":
+        analysis_text = "Le bien que vous projetez d'acheter se situe au dessus de la prédiction, cela peut être tout a fait possible et du à une situation exceptionnelle (Accès au transports, écoles...), à des atouts du type ascenceur, cave, vue exceptionnelle ou à une certaine rareté. Cependant si ce bien n'a à vos yeux ces atouts supplémentaires, il serait convenable de négocier ou de passer votre chemin."
+    elif f9 < prediction and f8 = "achat":
+        analysis_text = "Le bien que vous projetez d'acheter se situe en dessous de la prédiction, cela peut être tout a fait plausible si celui-ci s'avère excentré des commodités ou encore avec des défauts. À vous de comprendre pourquoi cette différence et s'il n'y pas de point noir, c'est la bonne affaire!"
+    elif f9 > prediction and f8 = "vente":
+        analysis_text = "Le bien que vous projetez de vendre a un prix qui se situe au dessus de la prédiction : c'est bien ! Toutefois, prenez votre temps et préparez-vous pour votre négociation quels sont ces atouts et qu'est ce qui justifie ce prix (rénovations, accès aux commodités...) ?"
+    else f9 < prediction and f8 = "vente":
+        analysis_text = "Le bien que vous projetez de vendre qui se situe en dessous de la prédiction : c'est bien pour attirer les visites, compenser des défauts et vendre vite. Cependant si ce n'est pas votre cas alors n'hésitez pas à réhausser."
+
+    return jsonify({"prediction": prediction[0], "prediction_2020": prediction_2020[0],"price_5" : price_5[0], "price_10" : price_10[0], "price_15" : price_15[0],"price_20" : price_20[0], "Taux_croissance" : Taux_croissance[0], "analysis_text" : analysis_text[0]}), 200
+
+@app.route('/sample_sold', methods=['GET'])
+def sample_sold():
+    try:
+        f1 = int(float(request.args.get('market_id')))
+        f2 = int(float(request.args.get('type_bien')))
+        f3 = float(request.args.get('nomb_piece'))
+        f4 = float(request.args.get('terr_m2'))
+        f5 = float(request.args.get('hab_m2'))
+        f6 = "2024"
+        f7 = int(float(request.args.get('tiers')))
+        f5_inf = f5-(f5*0.10)
+        f5_sup = f5+(f5*0.10)
+
+        server = os.environ.get("SERVER")
+        database = os.environ.get("DATABASE")
+        username = os.environ.get("DB_USERNAME")
+        password = os.environ.get("DB_PASSWORD")
+        
+        connection_string = (
+            f'DRIVER={{ODBC Driver 18 for SQL Server}};'
+            f'SERVER={server};'
+            f'DATABASE={database};'
+            f'UID={username};'
+            f'PWD={password};'
+            'Encrypt=yes;'
+            'TrustServerCertificate=no;'
+            'Connection Timeout=30;'
+        )
+
+        conn = pyodbc.connect(connection_string)
+        cursor = conn.cursor()
+
+        query = "SELECT * FROM dvf WHERE market_id = ? AND type = ? AND nb_room = ? AND (surface > ? AND surface < ?) AND year = ?"
+        cursor.execute(query, (f1,))
+
+        columns = [column[0] for column in cursor.description]
+        results = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+        cursor.close()
+        conn.close()
+        
+        # Catch into a dataframe
+
+        df = pd.DataFrame(results)
+
+
+
+        return jsonify(df.to_dict(orient='records'))
+
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
