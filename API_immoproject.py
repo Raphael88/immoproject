@@ -152,13 +152,13 @@ def prediction():
     price_15 = prediction * (1 + Taux_croissance) ** 15 
     price_20 = prediction * (1 + Taux_croissance) ** 20 
 
-    if f9 > prediction and f8 = "achat":
+    if f9 > prediction and f8 == "achat":
         analysis_text = "Le bien que vous projetez d'acheter se situe au dessus de la prédiction, cela peut être tout a fait possible et du à une situation exceptionnelle (Accès au transports, écoles...), à des atouts du type ascenceur, cave, vue exceptionnelle ou à une certaine rareté. Cependant si ce bien n'a à vos yeux ces atouts supplémentaires, il serait convenable de négocier ou de passer votre chemin."
-    elif f9 < prediction and f8 = "achat":
+    elif f9 < prediction and f8 == "achat":
         analysis_text = "Le bien que vous projetez d'acheter se situe en dessous de la prédiction, cela peut être tout a fait plausible si celui-ci s'avère excentré des commodités ou encore avec des défauts. À vous de comprendre pourquoi cette différence et s'il n'y pas de point noir, c'est la bonne affaire!"
-    elif f9 > prediction and f8 = "vente":
+    elif f9 > prediction and f8 == "vente":
         analysis_text = "Le bien que vous projetez de vendre a un prix qui se situe au dessus de la prédiction : c'est bien ! Toutefois, prenez votre temps et préparez-vous pour votre négociation quels sont ces atouts et qu'est ce qui justifie ce prix (rénovations, accès aux commodités...) ?"
-    elif f9 < prediction and f8 = "vente":
+    elif f9 < prediction and f8 == "vente":
         analysis_text = "Le bien que vous projetez de vendre qui se situe en dessous de la prédiction : c'est bien pour attirer les visites, compenser des défauts et vendre vite. Cependant si ce n'est pas votre cas alors n'hésitez pas à réhausser."
     else:
         analysis_text = ""
