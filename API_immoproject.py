@@ -163,7 +163,7 @@ def prediction():
     else:
         analysis_text = ""
         pass
-    return jsonify({"prediction": prediction[0], "prediction_2020": prediction_2020[0],"price_5" : price_5[0], "price_10" : price_10[0], "price_15" : price_15[0],"price_20" : price_20[0], "Taux_croissance" : Taux_croissance[0], "analysis_text" : analysis_text[0]}), 200
+    return jsonify({"prediction": prediction[0], "prediction_2020": prediction_2020[0],"price_5" : price_5[0], "price_10" : price_10[0], "price_15" : price_15[0],"price_20" : price_20[0], "Taux_croissance" : Taux_croissance[0], "analysis_text": analysis_text[0] if analysis_text else ""}), 200
 
 @app.route('/sample_sold', methods=['GET'])
 def sample_sold():
