@@ -158,9 +158,11 @@ def prediction():
         analysis_text = "Le bien que vous projetez d'acheter se situe en dessous de la prédiction, cela peut être tout a fait plausible si celui-ci s'avère excentré des commodités ou encore avec des défauts. À vous de comprendre pourquoi cette différence et s'il n'y pas de point noir, c'est la bonne affaire!"
     elif f9 > prediction and f8 = "vente":
         analysis_text = "Le bien que vous projetez de vendre a un prix qui se situe au dessus de la prédiction : c'est bien ! Toutefois, prenez votre temps et préparez-vous pour votre négociation quels sont ces atouts et qu'est ce qui justifie ce prix (rénovations, accès aux commodités...) ?"
-    else f9 < prediction and f8 = "vente":
+    elif f9 < prediction and f8 = "vente":
         analysis_text = "Le bien que vous projetez de vendre qui se situe en dessous de la prédiction : c'est bien pour attirer les visites, compenser des défauts et vendre vite. Cependant si ce n'est pas votre cas alors n'hésitez pas à réhausser."
-
+    else:
+        analysis_text = ""
+        pass
     return jsonify({"prediction": prediction[0], "prediction_2020": prediction_2020[0],"price_5" : price_5[0], "price_10" : price_10[0], "price_15" : price_15[0],"price_20" : price_20[0], "Taux_croissance" : Taux_croissance[0], "analysis_text" : analysis_text[0]}), 200
 
 @app.route('/sample_sold', methods=['GET'])
