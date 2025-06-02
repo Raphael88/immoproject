@@ -197,7 +197,7 @@ def prediction():
     Taux_croissance = ((prediction/prediction_2020)**(1/(f5-2020))-1)
 
     if Taux_croissance < 0:
-        Taux_croissance = 0
+        Taux_croissance[0] = 0
     else:
         pass
 
