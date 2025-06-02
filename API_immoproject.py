@@ -20,6 +20,11 @@ def with_market_id(f):
             return jsonify({"error": "Missing user_id"}), 400
 
         # 2. Connexion à la base de données
+
+            server = os.environ.get("SERVER")
+            database = os.environ.get("DATABASE")
+            username = os.environ.get("DB_USERNAME")
+            password = os.environ.get("DB_PASSWORD")
             connection_string = (
             f'DRIVER={{ODBC Driver 18 for SQL Server}};'
             f'SERVER={server};'
