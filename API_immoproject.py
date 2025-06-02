@@ -169,12 +169,12 @@ def user_market():
 @app.route('/predict', methods=['GET'])
 @with_market_id
 def prediction():
-    f1 = int(float(market_id))
+    f1 = int(float(request.args.get('type_bien')))
     f2 = float(request.args.get('nomb_piece'))
     f3 = float(request.args.get('terr_m2'))
     f4 = float(request.args.get('hab_m2'))
     f5 = float(request.args.get('Year'))
-    f6 = int(float(request.args.get('market_id')))
+    f6 = int(float(market_id)
     f7 = int(float(request.args.get('tiers')))
     f8 = request.args.get('situation')
     f9 = float(request.args.get('price_user'))
