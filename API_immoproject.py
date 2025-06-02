@@ -174,7 +174,7 @@ def prediction():
     f3 = float(request.args.get('terr_m2'))
     f4 = float(request.args.get('hab_m2'))
     f5 = float(request.args.get('Year'))
-    f6 = int(float(market_id)
+    f6 = int(float(market_id))
     f7 = int(float(request.args.get('tiers')))
     f8 = request.args.get('situation')
     f9 = float(request.args.get('price_user'))
