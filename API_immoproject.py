@@ -4,12 +4,53 @@ import pandas as pd
 import os
 from sklearn import  linear_model
 import joblib
+import functools
 
 app = Flask(__name__)
 API_KEY = os.environ.get("API_KEY")
 
 # Fonctions
 
+def with_market_id(f):
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        # 1. Essaye de récupérer le user_id depuis les query params ou les headers
+        user_id = request.args.get("user_id") 
+        if not user_id:
+            return jsonify({"error": "Missing user_id"}), 400
+
+        # 2. Connexion à la base de données
+            connection_string = (
+            f'DRIVER={{ODBC Driver 18 for SQL Server}};'
+            f'SERVER={server};'
+            f'DATABASE={database};'
+            f'UID={username};'
+            f'PWD={password};'
+            'Encrypt=yes;'
+            'TrustServerCertificate=no;'
+            'Connection Timeout=30;'
+        )
+
+        conn = pyodbc.connect(connection_string)
+        cursor = conn.cursor()
+
+        # 3. Requête pour obtenir le market_id lié à ce user_id
+        cursor.execute("SELECT market_id FROM user_market WHERE user_id = ?", (user_id,))
+        row = cursor.fetchone()
+
+        cursor.close()
+        conn.close()
+
+        # 4. Si aucun résultat : user non trouvé
+        if not row:
+            return jsonify({"error": "user not found"}), 404
+
+        # 5. Stocke le market_id dans flask.g → disponible dans la route ensuite
+        g.market_id = row.market_id  # ou row[0] selon ton curseur
+
+        # 6. Exécute la fonction route
+        return f(*args, **kwargs)
+    return wrapper
     
 # Routes
 
@@ -126,8 +167,9 @@ def user_market():
 
 
 @app.route('/predict', methods=['GET'])
+@with_market_id
 def prediction():
-    f1 = int(float(request.args.get('type_bien')))
+    f1 = int(float(market_id))
     f2 = float(request.args.get('nomb_piece'))
     f3 = float(request.args.get('terr_m2'))
     f4 = float(request.args.get('hab_m2'))
