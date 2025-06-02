@@ -222,7 +222,7 @@ def prediction():
 @app.route('/sample_sold', methods=['GET'])
 def sample_sold():
     try:
-        f1 = int(float(request.args.get('market_id')))
+        f1 = int(float(g.market_id))
         f2 = int(float(request.args.get('type_bien')))
         if f2 == 1:
             f2 = "Appartement"
@@ -278,7 +278,7 @@ def sample_sold():
 @app.route('/now_online', methods=['GET'])
 def now_online():
     try:
-        f1 = int(float(request.args.get('market_id')))
+        f1 = int(float(g.market_id))
         f2 = int(float(request.args.get('type_bien')))
         if f2 == 1:
             f2 = "Appartement"
