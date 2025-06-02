@@ -221,6 +221,62 @@ def sample_sold():
     except Exception as e:
         return jsonify({"error": str(e)})
 
+@app.route('/now_online', methods=['GET'])
+def now_online():
+    try:
+        f1 = int(float(request.args.get('market_id')))
+        f2 = int(float(request.args.get('type_bien')))
+        if f2 == 1:
+            f2 = "Appartement"
+        else:
+            f2 = "Maison"
+        f3 = float(request.args.get('nomb_piece'))
+        f4 = float(request.args.get('terr_m2'))
+        f5 = float(request.args.get('hab_m2'))
+        f6 = "2024"
+        f7 = int(float(request.args.get('tiers')))
+        f5_inf = f5-(f5*0.10)
+        f5_sup = f5+(f5*0.10)
+
+        server = os.environ.get("SERVER")
+        database = os.environ.get("DATABASE")
+        username = os.environ.get("DB_USERNAME")
+        password = os.environ.get("DB_PASSWORD")
+        
+        connection_string = (
+            f'DRIVER={{ODBC Driver 18 for SQL Server}};'
+            f'SERVER={server};'
+            f'DATABASE={database};'
+            f'UID={username};'
+            f'PWD={password};'
+            'Encrypt=yes;'
+            'TrustServerCertificate=no;'
+            'Connection Timeout=30;'
+        )
+
+        conn = pyodbc.connect(connection_string)
+        cursor = conn.cursor()
+
+        query = "SELECT * FROM desc_ad as a LEFT JOIN market as b ON b.market_name = a.place and b.Id = ? AND a.type_bien = ? AND a.nombre_piece = ? AND (a.hab_2 > ? AND a.hab_2 < ?)"
+        cursor.execute(query, (f1,f2, f3, f4, f5_inf, f5_sup,))
+
+        columns = [column[0] for column in cursor.description]
+        results = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+        cursor.close()
+        conn.close()
+        
+        # Catch into a dataframe
+
+        df = pd.DataFrame(results)
+
+
+
+        return jsonify(df.to_dict(orient='records'))
+
+    except Exception as e:
+        return jsonify({"error": str(e)})
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
