@@ -9,17 +9,6 @@ app = Flask(__name__)
 API_KEY = os.environ.get("API_KEY")
 
 # Fonctions
-def get_user_market(user_id_retool):
-    # Ici tu mets ta vraie requête SQL ou ORM
-    # Exemple avec du SQL brut (selon ta config réelle)
-    cursor = db.cursor()
-    cursor.execute("SELECT market_id FROM user_market WHERE id = %s", (user_id_retool,))
-    row = cursor.fetchone()
-
-    if row:
-        return {"user_id_retool": row[0]}
-    else:
-        return {"error": "User not found"}
 
     
 # Routes
