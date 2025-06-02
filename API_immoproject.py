@@ -40,8 +40,8 @@ def with_market_id(f):
         conn = pyodbc.connect(connection_string)
         cursor = conn.cursor()
 
-        # 3. Requête pour obtenir le market_id lié à ce user_id
-        cursor.execute("SELECT market_id FROM user_market WHERE user_id = ?", (user_id,))
+        # 3. Requête pour obtenir le market_id lié à ce user_id_retool
+        cursor.execute("SELECT market_id FROM user_market WHERE user_id_retool = ?", (user_id,))
         row = cursor.fetchone()
 
         cursor.close()
