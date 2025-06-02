@@ -170,6 +170,10 @@ def sample_sold():
     try:
         f1 = int(float(request.args.get('market_id')))
         f2 = int(float(request.args.get('type_bien')))
+        if f2 = 1:
+            f2 = "Appartement"
+        else:
+            f2 = "Maison"
         f3 = float(request.args.get('nomb_piece'))
         f4 = float(request.args.get('terr_m2'))
         f5 = float(request.args.get('hab_m2'))
