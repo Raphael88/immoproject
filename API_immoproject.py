@@ -74,10 +74,10 @@ def check_api_key():
 
 
 @app.route('/dvf_market', methods=['GET'])
-
+@with_market_id
 def dvf_market():
     try:
-        f1 = int(float(request.args.get('market_id')))
+        f1 = int(float(g.market_id))
         server = os.environ.get("SERVER")
         database = os.environ.get("DATABASE")
         username = os.environ.get("DB_USERNAME")
@@ -220,6 +220,7 @@ def prediction():
     return jsonify({"prediction": prediction[0], "prediction_2020": prediction_2020[0],"price_5" : price_5[0], "price_10" : price_10[0], "price_15" : price_15[0],"price_20" : price_20[0], "Taux_croissance" : Taux_croissance[0], "analysis_text": analysis_text if analysis_text else ""}), 200
 
 @app.route('/sample_sold', methods=['GET'])
+@with_market_id
 def sample_sold():
     try:
         f1 = int(float(g.market_id))
@@ -276,6 +277,7 @@ def sample_sold():
         return jsonify({"error": str(e)})
 
 @app.route('/now_online', methods=['GET'])
+@with_market_id
 def now_online():
     try:
         f1 = int(float(g.market_id))
