@@ -170,7 +170,7 @@ def sample_sold():
     try:
         f1 = int(float(request.args.get('market_id')))
         f2 = int(float(request.args.get('type_bien')))
-        if f2 = 1:
+        if f2 == 1:
             f2 = "Appartement"
         else:
             f2 = "Maison"
