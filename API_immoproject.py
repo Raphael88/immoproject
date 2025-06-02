@@ -21,20 +21,21 @@ def with_market_id(f):
 
         # 2. Connexion à la base de données
 
-            server = os.environ.get("SERVER")
-            database = os.environ.get("DATABASE")
-            username = os.environ.get("DB_USERNAME")
-            password = os.environ.get("DB_PASSWORD")
-            connection_string = (
-            f'DRIVER={{ODBC Driver 18 for SQL Server}};'
-            f'SERVER={server};'
-            f'DATABASE={database};'
-            f'UID={username};'
-            f'PWD={password};'
-            'Encrypt=yes;'
-            'TrustServerCertificate=no;'
-            'Connection Timeout=30;'
-        )
+        server = os.environ.get("SERVER")
+        database = os.environ.get("DATABASE")
+        username = os.environ.get("DB_USERNAME")
+        password = os.environ.get("DB_PASSWORD")
+        
+        connection_string = (
+        f'DRIVER={{ODBC Driver 18 for SQL Server}};'
+        f'SERVER={server};'
+        f'DATABASE={database};'
+        f'UID={username};'
+        f'PWD={password};'
+        'Encrypt=yes;'
+        'TrustServerCertificate=no;'
+        'Connection Timeout=30;'
+    )
 
         conn = pyodbc.connect(connection_string)
         cursor = conn.cursor()
