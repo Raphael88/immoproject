@@ -257,7 +257,7 @@ def now_online():
         cursor = conn.cursor()
 
         query = "SELECT * FROM desc_ad as a LEFT JOIN market as b ON b.market_name = a.place and b.Id = ? AND a.type_bien = ? AND a.nombre_piece = ? AND (a.hab_2 > ? AND a.hab_2 < ?) AND a.terr_m2 = ?"
-        cursor.execute(query, (f1,f2, f3, f4, f5_inf, f5_sup,))
+        cursor.execute(query, (f1,f2, f3,  f5_inf, f5_sup,f4,))
 
         columns = [column[0] for column in cursor.description]
         results = [dict(zip(columns, row)) for row in cursor.fetchall()]
