@@ -295,6 +295,8 @@ def now_online():
         f6 = "2024"
         f5_inf = f5-(f5*0.10)
         f5_sup = f5+(f5*0.10)
+        f4_inf = f4-(f4*0.10)
+        f4_sup = f4+(f4*0.10)
 
         server = os.environ.get("SERVER")
         database = os.environ.get("DATABASE")
@@ -315,8 +317,8 @@ def now_online():
         conn = pyodbc.connect(connection_string)
         cursor = conn.cursor()
 
-        query = "SELECT * FROM desc_ad as a LEFT JOIN market as b ON b.market_name = a.place WHERE b.Id = ? AND a.type_bien = ? AND a.nomb_piece = ? AND (a.hab_m2 > ? AND a.hab_m2 < ?) AND a.terr_m2 = ?"
-        cursor.execute(query, (f1,f2, f3,  f5_inf, f5_sup,f4,))
+        query = "SELECT * FROM desc_ad as a LEFT JOIN market as b ON b.market_name = a.place WHERE b.Id = ? AND a.type_bien = ? AND a.nomb_piece = ?  AND (a.terr_m2 > ? AND a.terr_m2 < ?)"
+        cursor.execute(query, (f1,f2, f3,  f5_inf, f5_sup,f4_inf,f4_sup,))
 
         columns = [column[0] for column in cursor.description]
         results = [dict(zip(columns, row)) for row in cursor.fetchall()]
