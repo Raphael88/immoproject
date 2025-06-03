@@ -189,6 +189,9 @@ def prediction():
     data = pd.DataFrame({'type_bien' : [str(f1)],  'nomb_piece' : [f2], 'terr_m2' : [f3], 'hab_m2' : [f4], 'Year' : [f5], 'tiers' : [f6]})
     X_real = data[['type_bien',  'nomb_piece', 'terr_m2', 'hab_m2', 'Year']]
     prediction = model.predict(X_real)
+    prediction_basse = prediction-(prediction*0.08)
+    prediction_haute = prediction+(prediction*0.08)
+
 
     model = joblib.load(f"models/{f6}_model_tier_{f7}.pkl")
     data = pd.DataFrame({'type_bien' : [str(f1)],  'nomb_piece' : [f2], 'terr_m2' : [f3], 'hab_m2' : [f4], 'Year' : [2020], 'tiers' : [f6]})
@@ -217,7 +220,7 @@ def prediction():
     else:
         analysis_text = ""
         pass
-    return jsonify({"prediction": prediction[0], "prediction_2020": prediction_2020[0],"price_5" : price_5[0], "price_10" : price_10[0], "price_15" : price_15[0],"price_20" : price_20[0], "Taux_croissance" : Taux_croissance[0], "analysis_text": analysis_text if analysis_text else ""}), 200
+    return jsonify({"prediction": prediction[0], "prediction_2020": prediction_2020[0],"price_5" : price_5[0], "price_10" : price_10[0], "price_15" : price_15[0],"price_20" : price_20[0], "Taux_croissance" : Taux_croissance[0], "analysis_text": analysis_text if analysis_text else "", "prediction_basse" : prediction_basse[0], "prediction_haute": prediction_haute[0]}), 200
 
 @app.route('/sample_sold', methods=['GET'])
 @with_market_id
