@@ -60,9 +60,11 @@ def with_market_id(f):
     
 # Routes
 
-
+# Defining route name 
 @app.before_request
+# The function contain in the API
 def check_api_key():
+    #If the route not health then request the API 
     if request.path != "/health":
         key = request.headers.get("x-api-key")
         if key != API_KEY:
@@ -70,13 +72,11 @@ def check_api_key():
 
 
 #Route to get all sold properties on user market
-
-
-
 @app.route('/dvf_market', methods=['GET'])
+#Defining the market_id variable which is called at the beginning of the file
 @with_market_id
-def dvf_market():
-    try:
+def dvf_market(): # The function
+    try: # Credential to access Azure SQL database
         f1 = int(float(g.market_id))
         server = os.environ.get("SERVER")
         database = os.environ.get("DATABASE")
@@ -94,14 +94,14 @@ def dvf_market():
             'Connection Timeout=30;'
         )
 
-        conn = pyodbc.connect(connection_string)
+        conn = pyodbc.connect(connection_string) # Initiate the connection to SQL Server database
         cursor = conn.cursor()
 
-        query = "SELECT * FROM dvf WHERE market_id = ?"
-        cursor.execute(query, (f1,))
+        query = "SELECT * FROM dvf WHERE market_id = ?" # SQL Query
+        cursor.execute(query, (f1,)) # Execute the query on the table in the database
 
-        columns = [column[0] for column in cursor.description]
-        results = [dict(zip(columns, row)) for row in cursor.fetchall()]
+        columns = [column[0] for column in cursor.description]  
+        results = [dict(zip(columns, row)) for row in cursor.fetchall()] # Structure the results in a dictionnary
 
         cursor.close()
         conn.close()
@@ -317,8 +317,8 @@ def now_online():
         conn = pyodbc.connect(connection_string)
         cursor = conn.cursor()
 
-        query = "SELECT * FROM desc_ad as a LEFT JOIN market as b ON b.market_name = a.place WHERE b.Id = ? AND a.type_bien = ? AND a.nomb_piece = ? AND (a.hab_m2 > ? AND a.hab_m2 < ?)  "
-        cursor.execute(query, (f1,f2, f3,  f5_inf, f5_sup))
+        query = "SELECT * FROM desc_ad as a LEFT JOIN market as b ON b.market_name = a.place WHERE b.Id = ? AND a.type_bien = ? AND a.nomb_piece = ? AND (a.hab_m2 > ? AND a.hab_m2 < ?) "
+        cursor.execute(query, (f1,f2, f3,  f5_inf, f5_sup,))
 
         columns = [column[0] for column in cursor.description]
         results = [dict(zip(columns, row)) for row in cursor.fetchall()]
