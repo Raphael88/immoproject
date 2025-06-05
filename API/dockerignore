@@ -1,4 +1,11 @@
 __pycache__/
-.git/
-*.log
-*.csv
+*.pyc
+*.pyo
+*.pyd
+.env
+*.db
+.git
+.gitignore
+.vscode
+README.md
+test.py

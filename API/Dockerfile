@@ -26,7 +26,7 @@ COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Étape 4 : Copier le code dans le conteneur
-COPY . /app/API
+COPY . /app
 
 # Forçage du port
 EXPOSE 8000
