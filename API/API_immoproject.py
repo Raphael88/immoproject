@@ -330,8 +330,6 @@ def now_online():
 
         df = pd.DataFrame(results)
 
-
-
         return jsonify(df.to_dict(orient='records'))
 
     except Exception as e:
