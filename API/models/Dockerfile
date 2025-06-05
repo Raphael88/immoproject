@@ -20,7 +20,7 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Étape 4 : Copier le code dans le conteneur
-COPY . /app
+COPY . /app/API
 
 # Étape 5 : Installer les dépendances Python
 RUN pip install --no-cache-dir -r requirements.txt
