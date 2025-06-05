@@ -32,4 +32,4 @@ COPY . /app
 EXPOSE 8000
 
 # Étape 6 : Lancer le serveur avec gunicorn
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "API.API_immoproject:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "API_immoproject:app"]
