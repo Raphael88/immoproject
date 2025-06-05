@@ -19,14 +19,17 @@ RUN apt-get update && \
 # Étape 3 : Définir le dossier de travail
 WORKDIR /app
 
-# Étape 4 : Copier le code dans le conteneur
-COPY . /app/API
+
+COPY requirements.txt /app/
 
 # Étape 5 : Installer les dépendances Python
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Étape 4 : Copier le code dans le conteneur
+COPY . /app/API
 
 # Forçage du port
 EXPOSE 8000
 
 # Étape 6 : Lancer le serveur avec gunicorn
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "API_immoproject:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "API.API_immoproject:app"]
