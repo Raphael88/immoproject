@@ -259,7 +259,7 @@ def sample_sold():
         conn = pyodbc.connect(connection_string)
         cursor = conn.cursor()
 
-        query = "SELECT * FROM dvf WHERE market_id = ? AND type = ? AND nb_room = ? AND (surface > ? AND surface < ?) AND year = ?"
+        query = "SELECT *, address + ' ' + post_code + ' ' + Commune as addresse_all FROM dvf WHERE market_id = ? AND type = ? AND nb_room = ? AND (surface > ? AND surface < ?) AND year = ?"
         cursor.execute(query, (f1,f2,f3,f5_inf,f5_sup,f6,))
 
         columns = [column[0] for column in cursor.description]
