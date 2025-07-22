@@ -15,8 +15,9 @@ def with_market_id(f):
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
         # 1. Essaye de récupérer le user_id depuis les query params ou les headers
-        user_id = request.args.get("user_id") 
-        if not user_id:
+        town = request.args.get("town") 
+        post_code = request.args.get("post_code") 
+        if not town:
             return jsonify({"error": "Missing user_id"}), 400
 
         # 2. Connexion à la base de données
@@ -41,7 +42,7 @@ def with_market_id(f):
         cursor = conn.cursor()
 
         # 3. Requête pour obtenir le market_id lié à ce user_id_retool
-        cursor.execute("SELECT market_id FROM user_market WHERE user_id_retool = ?", (user_id,))
+        cursor.execute("SELECT market_id FROM user_market WHERE market_name = ? AND post_code = ? ", (town,post_code,))
         row = cursor.fetchone()
 
         cursor.close()
