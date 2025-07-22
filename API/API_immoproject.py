@@ -194,7 +194,7 @@ def prediction():
     prediction_haute = prediction+(prediction*0.08)
 
 
-    model = joblib.load(f"models/{f6}_model_tier_{f7}.pkl")
+    model = joblib.load(f"models/model_tier_{f6}_{f7}.pkl")
     data = pd.DataFrame({'type_bien' : [str(f1)],  'nomb_piece' : [f2], 'terr_m2' : [f3], 'hab_m2' : [f4], 'Year' : [2020], 'tiers' : [f6]})
     X_real = data[['type_bien',  'nomb_piece', 'terr_m2', 'hab_m2', 'Year']]
     prediction_2020 = model.predict(X_real)
@@ -240,6 +240,8 @@ def sample_sold():
         f7 = int(float(request.args.get('tiers')))
         f5_inf = f5-(f5*0.10)
         f5_sup = f5+(f5*0.10)
+        f8 = int(float(request.args.get('town')))
+        f9 = int(float(request.args.get('post_code')))
 
         server = os.environ.get("SERVER")
         database = os.environ.get("DATABASE")
