@@ -186,7 +186,7 @@ def prediction():
     f8 = request.args.get('situation')
     f9 = float(request.args.get('price_user'))
 
-    model = joblib.load(f"models/{f6}_model_tier_{f7}.pkl")
+    model = joblib.load(f"models/model_tier_{f6}_{f7}.pkl")
     data = pd.DataFrame({'type_bien' : [str(f1)],  'nomb_piece' : [f2], 'terr_m2' : [f3], 'hab_m2' : [f4], 'Year' : [f5], 'tiers' : [f6]})
     X_real = data[['type_bien',  'nomb_piece', 'terr_m2', 'hab_m2', 'Year']]
     prediction = model.predict(X_real)
