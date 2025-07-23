@@ -18,8 +18,9 @@ def with_market_id(f):
         town = request.args.get("town") 
         post_code = request.args.get("post_code") 
         if not town:
-            return jsonify({"error": "Missing user_id"}), 400
-
+            return jsonify({"error": "Missing town"}), 400
+        if not post_code:
+            return jsonify({"error": "Missing post_code"}), 400
         # 2. Connexion à la base de données
 
         server = os.environ.get("SERVER")
@@ -240,8 +241,7 @@ def sample_sold():
         f7 = int(float(request.args.get('tiers')))
         f5_inf = f5-(f5*0.10)
         f5_sup = f5+(f5*0.10)
-        f8 = int(float(request.args.get('town')))
-        f9 = int(float(request.args.get('post_code')))
+
 
         server = os.environ.get("SERVER")
         database = os.environ.get("DATABASE")
