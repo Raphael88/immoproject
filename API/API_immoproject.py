@@ -220,9 +220,9 @@ def prediction():
     elif f9 < prediction and f8 == "vente":
         analysis_text = "Le bien que vous projetez de vendre qui se situe en dessous de la prédiction : c'est bien pour attirer les visites, compenser des défauts et vendre vite. Cependant si ce n'est pas votre cas alors n'hésitez pas à réhausser."
     elif f9 > prediction and f8 == "estimation":
-        analysis_text = "Le prix estimé est supérieur à la prédiction. En cas de forte différence, vérifier les caractéristiques et surtout que l'état du bien choisi est conforme avec les biens dans le même état sur le marché. Le propriétaire pourrait avoir une mauvaise idée du marché. Si écart mineur, il y a peut être des spécificités permettant d'augmenter le prix (exemple : Ascenceur, terrasse, vue...)."
+        analysis_text = "Le prix estimé est supérieur à la prédiction qui elle est un prix réel de vente. En cas de forte différence, vérifier les caractéristiques et surtout que l'état du bien choisi est conforme avec les biens dans le même état sur le marché. Le propriétaire pourrait avoir une mauvaise idée du marché. Si écart mineur, il y a peut être des spécificités permettant d'augmenter le prix (exemple : Ascenceur, terrasse, vue...). Bien penser que la prédiction est un prix réel de vente donc le prix estimé devrait tenir compte d'une marge de négociation."
     elif f9 < prediction and f8 == "estimation":
-        analysis_text = "Le prix estimé est inférieur à la prédiction. Vérifier les caractéristique du bien puis que l'état du bien n'est pas sous estimé par rapport au marché. Est ce que le bien a des défauts ? Si oui, il faut en tenir compte, si non ce serait interessant d'augmenter le prix."
+        analysis_text = "Le prix estimé est inférieur à la prédiction qui elle est un prix réel de vente. Vérifier les caractéristique du bien puis que l'état du bien n'est pas sous estimé par rapport au marché. Est ce que le bien a des défauts ? Si oui, il faut en tenir compte, si non ce serait interessant d'augmenter le prix.Bien penser que la prédiction est un prix réel de vente donc le prix estimé devrait tenir compte d'une marge de négociation."
     else:
         analysis_text = ""
         pass
