@@ -239,8 +239,8 @@ def sample_sold():
         f5 = float(request.args.get('hab_m2'))
         f6 = "2024"
         f7 = int(float(request.args.get('tiers')))
-        f5_inf = f5-(f5*0.10)
-        f5_sup = f5+(f5*0.10)
+        f5_inf = f5-(f5*0.20)
+        f5_sup = f5+(f5*0.20)
 
 
         server = os.environ.get("SERVER")
