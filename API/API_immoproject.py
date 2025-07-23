@@ -262,7 +262,7 @@ def sample_sold():
             'TrustServerCertificate=no;'
             'Connection Timeout=30;'
         )
-        if f2 = "Appartement":
+        if f2 == "Appartement":
             f3_inf = f3
             f3_sup = f3
         else:
