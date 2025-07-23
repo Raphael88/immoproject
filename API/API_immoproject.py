@@ -258,12 +258,18 @@ def sample_sold():
             'TrustServerCertificate=no;'
             'Connection Timeout=30;'
         )
+        if f2 = "Appartement":
+            f3_inf = f3
+            f3_sup = f3
+        else:
+            f3_inf = f3-1
+            f3_sup = f3+1
 
         conn = pyodbc.connect(connection_string)
         cursor = conn.cursor()
 
-        query = "SELECT *, address + ' ' + post_code + ' ' + Commune as addresse_all FROM dvf WHERE market_id = ? AND type = ? AND nb_room = ? AND (surface > ? AND surface < ?) AND year = ?"
-        cursor.execute(query, (f1,f2,f3,f5_inf,f5_sup,f6,))
+        query = "SELECT *, address + ' ' + post_code + ' ' + Commune as addresse_all FROM dvf WHERE market_id = ? AND type = ? AND (nb_room >= ? AND nb_room <= ?) AND (surface > ? AND surface < ?) AND year = ?"
+        cursor.execute(query, (f1,f2,f3_inf,f3_sup,f5_inf,f5_sup,f6,))
 
         columns = [column[0] for column in cursor.description]
         results = [dict(zip(columns, row)) for row in cursor.fetchall()]
