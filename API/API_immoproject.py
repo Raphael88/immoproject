@@ -219,6 +219,10 @@ def prediction():
         analysis_text = "Le bien que vous projetez de vendre a un prix qui se situe au dessus de la prédiction : c'est bien ! Toutefois, prenez votre temps et préparez-vous pour votre négociation quels sont ces atouts et qu'est ce qui justifie ce prix (rénovations, accès aux commodités...) ?"
     elif f9 < prediction and f8 == "vente":
         analysis_text = "Le bien que vous projetez de vendre qui se situe en dessous de la prédiction : c'est bien pour attirer les visites, compenser des défauts et vendre vite. Cependant si ce n'est pas votre cas alors n'hésitez pas à réhausser."
+    elif f9 > prediction and f8 == "estimation":
+        analysis_text = "Le prix estimé est supérieur à la prédiction. En cas de forte différence, vérifier les caractéristiques et surtout que l'état du bien choisi est conforme avec les biens dans le même état sur le marché. Le propriétaire pourrait avoir une mauvaise idée du marché. Si écart mineur, il y a peut être des spécificités permettant d'augmenter le prix (exemple : Ascenceur, terrasse, vue...)."
+    elif f9 < prediction and f8 == "estimation":
+        analysis_text = "Le prix estimé est inférieur à la prédiction. Vérifier les caractéristique du bien puis que l'état du bien n'est pas sous estimé par rapport au marché. Est ce que le bien a des défauts ? Si oui, il faut en tenir compte, si non ce serait interessant d'augmenter le prix."
     else:
         analysis_text = ""
         pass
